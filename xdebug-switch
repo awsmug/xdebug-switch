@@ -1,0 +1,16 @@
+#!/bin/bash
+
+PHP_INI_LOCATION=$(php -r 'echo php_ini_loaded_file();')
+
+if [ "$1" = "on" ]; 
+then
+    `sed -i '' 's/^;zend_extension/zend_extension/g' $PHP_INI_LOCATION`
+    echo "Xdebug on in ${PHP_INI_LOCATION}"
+    valet restart
+elif [ "$1" = "off" ]; 
+then
+    `sed -i '' 's/^zend_extension/;zend_extension/g' $PHP_INI_LOCATION`
+    echo "Xdebug off in ${PHP_INI_LOCATION}"
+    valet restart
+fi
+
